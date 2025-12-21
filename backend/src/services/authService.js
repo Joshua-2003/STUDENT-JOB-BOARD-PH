@@ -4,6 +4,10 @@ import { eq } from 'drizzle-orm';
 
 import { studentTable } from '../db/schemas/studentsTable.js';
 import { companyTable } from '../db/schemas/companyTable.js';
+import { adminTable } from '../db/schemas/adminTable.js';
+
+import jwt from 'jsonwebtoken';
+import { AppError } from '../utils/error.js';
 
 /**
  * Sign up a new user (student or employer)
@@ -56,10 +60,44 @@ export const signUp = async (userData) => {
     }
 };
 
-export const login = async (email, password) => {
+
+export const login = async (email, password, type) => {
     try {
-        
+        // Map user type to table
+        const tableMap = {
+            EMPLOYER: companyTable,
+            STUDENT: studentTable,
+            ADMIN: adminTable,
+        };
+
+        const table = tableMap[type];
+
+        // Fetch user
+        const [user] = await db
+            .select()
+            .from(table)
+            .where(eq(table.email, email));
+
+        if (!user) {
+            throw new AppError("User not found", 404);
+        }
+
+        // Check password
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            throw new AppError("Invalid credentials", 401);
+        }
+
+        // Generate token
+        const token = jwt.sign(
+            { id: user.id, email: user.email, type: user.type },
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES_IN }
+        );
+
+        return { token, user };
+
     } catch (error) {
         throw error;
     }
-}
+};

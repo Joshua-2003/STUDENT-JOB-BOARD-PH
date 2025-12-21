@@ -53,6 +53,19 @@ export const signUpValidator = [
     .notEmpty().withMessage('Location is required for companies'),
 ];
 
+export const loginValidator = [
+  body('email')
+    .notEmpty().withMessage('Email is required')
+    .isEmail().withMessage('Email is invalid'),
+
+  body('password')
+    .notEmpty().withMessage('Password is required'),
+  
+  body('type')
+    .notEmpty().withMessage('User type is required')
+    .isIn(['STUDENT', 'EMPLOYER', 'ADMIN']).withMessage('Invalid user type'),
+
+];
 
 export const handleValidationErrors = (req, res, next) => {
   const errors = validationResult(req);
