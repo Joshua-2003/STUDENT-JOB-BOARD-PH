@@ -5,6 +5,11 @@ import { eq } from 'drizzle-orm';
 import { studentTable } from '../db/schemas/studentsTable.js';
 import { companyTable } from '../db/schemas/companyTable.js';
 
+/**
+ * Sign up a new user (student or employer)
+ * @param {*} userData 
+ * @returns {Promise<Object>} newly created user (student or employer)
+ */
 export const signUp = async (userData) => {
     try {
        
@@ -50,3 +55,11 @@ export const signUp = async (userData) => {
         throw error;
     }
 };
+
+export const login = async (email, password) => {
+    try {
+        
+    } catch (error) {
+        throw error;
+    }
+}
