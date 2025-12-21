@@ -3,40 +3,61 @@ import bcrypt from "bcrypt";
 import { eq } from 'drizzle-orm';
 
 import { studentTable } from '../db/schemas/studentsTable.js';
+import { companyTable } from '../db/schemas/companyTable.js';
 
 export const signUp = async (userData) => {
     try {
-        // Check if user exists
-        const [existingUser] = await db
-            .select()
-            .from(studentTable)
-            .where(eq(studentTable.email, userData.email))
-            .limit(1);
-
-        if (existingUser) {
-            throw new Error("User already exists");
+        if (!['STUDENT', 'EMPLOYER'].includes(userData.type)) {
+            throw new Error('Invalid user type');
         }
 
-        // Hash the password
         const hashedPassword = await bcrypt.hash(userData.password, 10);
 
-        // Clean data
+        if (userData.type === 'EMPLOYER') {
+            const cleanData = {
+                name: userData.name,
+                email: userData.email,
+                description: userData.description,
+                location: userData.location,
+                type: userData.type,
+                password: hashedPassword,
+            };
+
+            const [result] = await db
+                .insert(companyTable)
+                .values(cleanData)
+                .returning({ name: companyTable.name, email: companyTable.email });
+
+            return result;
+        }
+
+        // STUDENT
         const cleanData = {
             name: userData.name,
             age: userData.age,
             email: userData.email,
             course: userData.course,
             resume_url: userData.resume_url,
+            type: userData.type,
             password: hashedPassword,
         };
 
-        // Insert new user
-        const [result] = await db.insert(studentTable).values(cleanData).returning({ insertingName: studentTable.name, insertingEmail: studentTable.email });
+        const [result] = await db
+            .insert(studentTable)
+            .values(cleanData)
+            .returning({ name: studentTable.name, email: studentTable.email });
 
-        console.log("User signed up successfully:", result); // For debugging
         return result;
+
     } catch (error) {
-        console.error("Error during sign-up:", error); // For debugging
-        throw error; // Important for caller to know
+        /**
+         * Handle unique constraint error
+         * 23505 is the Postgres error code for unique violation
+        */          
+        if (error.code === '23505') {
+            throw new Error('Email already registered');
+        }
+
+        throw error;
     }
 };
