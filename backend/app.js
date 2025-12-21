@@ -5,6 +5,8 @@ import 'dotenv/config';
 
 import authRoutes from './src/routes/authRoutes.js';
 
+import { errorHandler } from './src/utils/error.js';
+
 const app = express();
 
 // CORS configuration
@@ -45,5 +47,8 @@ app.use((req, res) => {
         },
     });
 });
+
+// Error handling middleware
+app.use(errorHandler);
 
 export default app;

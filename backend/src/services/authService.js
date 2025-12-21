@@ -5,10 +5,12 @@ import { eq } from 'drizzle-orm';
 import { studentTable } from '../db/schemas/studentsTable.js';
 import { companyTable } from '../db/schemas/companyTable.js';
 
+import { AppError } from '../utils/error.js';
+
 export const signUp = async (userData) => {
     try {
         if (!['STUDENT', 'EMPLOYER'].includes(userData.type)) {
-            throw new Error('Invalid user type');
+            throw new AppError('Invalid user type', 400);
         }
 
         const hashedPassword = await bcrypt.hash(userData.password, 10);
@@ -50,14 +52,6 @@ export const signUp = async (userData) => {
         return result;
 
     } catch (error) {
-        /**
-         * Handle unique constraint error
-         * 23505 is the Postgres error code for unique violation
-        */          
-        if (error.code === '23505') {
-            throw new Error('Email already registered');
-        }
-
         throw error;
     }
 };
