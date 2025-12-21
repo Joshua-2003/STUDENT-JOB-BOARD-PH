@@ -60,7 +60,12 @@ export const signUp = async (userData) => {
     }
 };
 
-
+/**
+ * @param {*} email 
+ * @param {*} password 
+ * @param {*} type 
+ * @returns {Promise<Object>} token and user data
+ */
 export const login = async (email, password, type) => {
     try {
         // Map user type to table
