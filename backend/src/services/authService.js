@@ -5,14 +5,9 @@ import { eq } from 'drizzle-orm';
 import { studentTable } from '../db/schemas/studentsTable.js';
 import { companyTable } from '../db/schemas/companyTable.js';
 
-import { AppError } from '../utils/error.js';
-
 export const signUp = async (userData) => {
     try {
-        if (!['STUDENT', 'EMPLOYER'].includes(userData.type)) {
-            throw new AppError('Invalid user type', 400);
-        }
-
+       
         const hashedPassword = await bcrypt.hash(userData.password, 10);
 
         if (userData.type === 'EMPLOYER') {
