@@ -6,7 +6,6 @@ import FormButton from "../../../components/form/FormButton";
 import FormSelect from "../../../components/form/FormSelect";
 
 import api from "../../../api/axios";
-import axios from "axios";
 
 export default function Signup() {
     const {
