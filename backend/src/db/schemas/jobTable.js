@@ -3,7 +3,7 @@ import { integer, uuid, pgTable, varchar, text, timestamp, pgEnum } from "drizzl
 import { companyTable } from "./companyTable.js";
 import { jobTypeEnum } from "../enums/jobenums.js";
 
-export const jobsTable = pgTable("jobs", {
+export const jobTable = pgTable("jobs", {
     id: uuid('id').primaryKey().defaultRandom(),
     company_id: uuid('company_id').references(() => companyTable.id).notNull(),
     title: varchar({ length: 255 }).notNull(),

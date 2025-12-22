@@ -31,16 +31,16 @@ export const requireAuth = (req, res, next) => {
 
 /**
  * Role-based authorization middleware
- * @param {string[]} allowedRoles - Array of allowed roles
+ * @param {string[]} allowedTypes - Array of allowed roles
  */
-export const authorize = (...allowedRoles) => {
+export const authorize = (...allowedTypes) => {
     return (req, res, next) => {
         try {
             if (!req.user) {
                 throw new AppError("Not authenticated", 401);
             }
 
-            if (!allowedRoles.includes(req.user.role)) {
+            if (!allowedTypes.includes(req.user.type)) {
                 throw new AppError("You do not have permission to access this resource", 403);
             }
 

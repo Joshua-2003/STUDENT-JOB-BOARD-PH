@@ -5,6 +5,8 @@ import 'dotenv/config';
 
 import authRoutes from './src/routes/authRoutes.js';
 
+import adminRoutes from './src/routes/adminRoutes.js';
+
 import { errorHandler } from './src/utils/error.js';
 
 const app = express();
@@ -32,6 +34,7 @@ app.use((req, res, next) => {
 app.use('/api/auth', authRoutes);
 
 // API Routes For Admin
+app.use('/api/admin', adminRoutes);
 
 // API Routes For Students
 
