@@ -23,7 +23,7 @@ export const handleLogin = async (req, res, next) => {
         res.cookie('token', token, {
             httpOnly: true,
             secure: false,  // Set to true if using HTTPS in production only
-            sameSite: 'none',
+            sameSite: 'lax',
             maxAge: 24 * 60 * 60 * 1000 // 1 day
         })
 
