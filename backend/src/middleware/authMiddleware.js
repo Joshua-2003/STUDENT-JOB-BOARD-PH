@@ -28,3 +28,26 @@ export const requireAuth = (req, res, next) => {
         next(error);
     }
 };
+
+/**
+ * Role-based authorization middleware
+ * @param {string[]} allowedRoles - Array of allowed roles
+ */
+export const authorize = (...allowedRoles) => {
+    return (req, res, next) => {
+        try {
+            if (!req.user) {
+                throw new AppError("Not authenticated", 401);
+            }
+
+            if (!allowedRoles.includes(req.user.role)) {
+                throw new AppError("You do not have permission to access this resource", 403);
+            }
+
+            next();
+        } catch (error) {
+            next(error);
+        }
+        
+    };
+};
