@@ -12,7 +12,7 @@ export const signUpValidator = [
 
   body('password')
     .notEmpty().withMessage('Password is required')
-    .isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
+    .isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
 
   body('confirmPassword')
     .notEmpty().withMessage('Confirm password is required')
@@ -32,16 +32,18 @@ export const signUpValidator = [
   body('age')
     .if(body('type').equals('STUDENT'))
     .notEmpty().withMessage('Age is required for students')
-    .isInt({ min: 16 }).withMessage('Age must be 16 or older'),
+    .isInt({ min: 18 }).withMessage('Age must be 18 or older'),
 
   body('course')
     .if(body('type').equals('STUDENT'))
     .notEmpty().withMessage('Course is required for students'),
 
-  body('resume_url')
-    .if(body('type').equals('STUDENT'))
-    .notEmpty().withMessage('Resume URL is required for students'),
-    // .isURL().withMessage('Resume URL must be a valid URL'),
+  body('resume_url').custom((value, { req }) => {
+    if (req.body.type === 'STUDENT' && !req.file) {
+      throw new Error('Resume is required for students');
+    }
+    return true;
+  }),
 
   // Only required if company
   body('description')

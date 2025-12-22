@@ -2,8 +2,14 @@ import { signUp, login } from '../services/authService.js';
 
 export const handleSignUp = async (req, res, next) => {
     try {
-        const user = await signUp(req.body);
-        res.status(201).json({ success: true, message: "User signed up successfully", data: user });
+        console.log("req.file:", req.file);
+        const userData = req.body;
+
+        if (userData.type === 'STUDENT' && req.file) {
+            userData.resume_url = req.file.path; // Save the file path to resume_url
+        }
+        const newUser = await signUp(userData);
+        res.status(201).json({ success: true, message: "User signed up successfully", data: newUser });
     } catch (error) {
         next(error);
     }
