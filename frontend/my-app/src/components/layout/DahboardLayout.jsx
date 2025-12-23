@@ -1,6 +1,8 @@
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from 'react-router-dom';
 
+import { MdDashboard, MdPeople, MdInsertChart, MdLogout } from "react-icons/md";
+
 export const DashboardLayout = ({ children }) => {
     const navigate = useNavigate();
     const { user, logout } = useAuth();
@@ -22,16 +24,16 @@ export const DashboardLayout = ({ children }) => {
         switch (user?.type) {
             case "ADMIN":
                 return [
-                    { name: "Dashboard", path: "/admin" },
-                    { name: "Students List", path: "/students-list" },
+                    { name: "Dashboard", path: "/admin", icon: MdDashboard },
+                    { name: "Students List", path: "/students-list", icon: MdPeople },
                 ];
             case "EMPLOYER":
                 return [
-                    { name: "Dashboard", path: "/employer" },
+                    { name: "Dashboard", path: "/employer", icon: MdDashboard },
                 ];
             case "STUDENT":
                 return [
-                    { name: "Dashboard", path: "/student" },
+                    { name: "Dashboard", path: "/student", icon: MdDashboard },
                 ];
             default:
                 return [];
@@ -41,47 +43,57 @@ export const DashboardLayout = ({ children }) => {
     const navItems = getNavItems();
 
     return (
-        <div className="flex flex-col min-h-screen bg-gray-900 text-gray-100">
-            {/* Header */}
-            <header className="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
-                <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-                    {/* Logo / Title */}
-                    <h2
-                        className="text-2xl font-bold cursor-pointer hover:text-indigo-400 transition-colors"
-                        onClick={() => navigate(getDashboardPath())}
-                    >
-                        STUDENT JOB BOARD PH
-                    </h2>
+        <div className="flex h-screen bg-white ">
+            {/* Sidebar */}
+            <aside className="h-screen w-64 bg-white flex flex-col shadow-xl">
+                {/* Logo */}
+                <div className="h-16 flex flex-col items-center justify-center px-4 gap-4 pt-4">
+                    <div onClick={() => navigate(getDashboardPath)} className="text-[#344767] font-bold cursor-pointer">
+                        JOB BOARD PH
+                    </div>
 
-                    {/* Navigation */}
-                    <nav className="hidden md:flex items-center gap-6">
-                        {navItems.map((item) => (
+                    {/* Divider */}
+                    <div className="bg-gray-200 w-full h-px rounded-full"></div>
+                </div>
+
+
+                {/* Main Nav */}
+                <nav className="flex flex-col gap-4 px-4 py-6 flex-grow">
+                    {navItems.map((item) => {
+                        const Icon = item.icon; // get the icon component
+                        return (
                             <button
                                 key={item.path}
                                 onClick={() => navigate(item.path)}
-                                className="px-3 py-2 rounded hover:bg-gray-700 hover:text-indigo-400 transition-colors"
+                                className="text-[#344767] font-medium flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-100 w-full text-left cursor-pointer"
                             >
-                                {item.name}
+                                <span className="shadow-2xl bg-gray-200 p-2 rounded-lg">
+                                    <Icon className="" />
+                                </span>
+                                <span className="text-sm">{item.name}</span>
                             </button>
-                        ))}
-                    </nav>
-                </div>
-            </header>
+                        );
+                    })}
+                </nav>
 
-            {/* Main Content */}
-            <main className="flex-1 container mx-auto px-4 py-8">
+
+                {/* Bottom Nav */}
+                <div className="p-3 space-y-1">
+                    <button className="text-[#344767] font-medium flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-100 w-full text-left cursor-pointer">
+                        <span className="shadow-2xl bg-gray-200 p-2 rounded-lg"><MdLogout /></span>
+                        <span className="text-sm">Logout</span>
+                    </button>
+                </div>
+
+                
+            </aside>
+
+            {/* Main Area */}
+            <main className="flex-1 p-6 overflow-auto bg-gray-50">
                 {children}
             </main>
-
-            {/* Footer */}
-            <footer className="bg-gray-800 border-t border-gray-700">
-                <div className="container mx-auto px-4 py-6">
-                    <p className="text-center text-sm text-gray-400">
-                        © 2025 Student Job Board PH. All rights reserved.
-                    </p>
-                </div>
-            </footer>
         </div>
+    );
 
-    )
+
 }
