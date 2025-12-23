@@ -12,10 +12,10 @@ import AdminDashboard from "./pages/Admin/Dashboard.jsx";
 import StudentsList from "./pages/Admin/StudentsList.jsx";
 
 // Student Pages
-import StudentDashboard from "./pages/Student/Home.jsx";
+import StudentDashboard from "./pages/Student/Dashboard.jsx";
 
 // Employer Pages
-import EmployerDashboard from "./pages/Employer/Home.jsx";
+import EmployerDashboard from "./pages/Employer/Dashboard.jsx";
 
 function App() {
 
