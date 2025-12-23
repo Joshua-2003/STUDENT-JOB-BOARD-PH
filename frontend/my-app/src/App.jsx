@@ -9,6 +9,7 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 // Admin Pages
 import AdminDashboard from "./pages/Admin/Dashboard.jsx";
+import StudentsList from "./pages/Admin/StudentsList.jsx";
 
 // Student Pages
 import StudentDashboard from "./pages/Student/Home.jsx";
@@ -34,6 +35,15 @@ function App() {
                 <AdminDashboard />
               </ProtectedRoute>
             } 
+          />
+
+          <Route
+            path="/students-list"
+            element={
+              <ProtectedRoute allowedRoles={["ADMIN"]}>
+                <StudentsList />
+              </ProtectedRoute>
+            }
           />
 
           {/* Student routes */}
