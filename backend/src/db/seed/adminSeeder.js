@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import db  from '../../index.js';
 import { adminTable } from '../schemas/adminTable.js';
 
-const seedAdmin = async () => {
+export const seedAdmin = async () => {
     try {
         console.log('🌱 Starting admin seed...');
 
@@ -61,6 +61,3 @@ const seedAdmin = async () => {
         process.exit(1);
     }
 };
-
-// Run seed
-seedAdmin();
