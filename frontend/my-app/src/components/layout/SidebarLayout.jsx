@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { MdDashboard, MdPeople, MdInsertChart, MdLogout } from "react-icons/md";
 
-export const DashboardLayout = ({ children }) => {
+export default function SidebarLayout({ children }) {
     const navigate = useNavigate();
     const { user, logout } = useAuth();
 

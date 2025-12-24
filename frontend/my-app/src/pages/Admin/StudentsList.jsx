@@ -2,7 +2,7 @@ import { createColumnHelper } from "@tanstack/react-table"
 
 import DataTable from "../../components/DataTable/DataTable";
 
-import { DashboardLayout } from "../../components/layout/DahboardLayout.jsx";
+import MainLayout from "../../components/layout/MainLayout.jsx";
 
 import api from "../../api/axios.js";
 
@@ -56,9 +56,9 @@ export default function StudentsList() {
     }, []);
 
     return (
-        <DashboardLayout>
-            <h1>Students List</h1>
+        <MainLayout>
+            {/* <h1>Students List</h1> */}
             <DataTable columns={columns} data={students} />
-        </DashboardLayout>
+        </MainLayout>
     )
 }

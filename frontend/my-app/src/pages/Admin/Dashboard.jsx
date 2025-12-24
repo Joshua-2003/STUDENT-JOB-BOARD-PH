@@ -1,10 +1,10 @@
-import { DashboardLayout } from "../../components/layout/DahboardLayout"
+import MainLayout from "../../components/layout/MainLayout.jsx";
 
 
 export default function Dashboard() {
     return (
-        <DashboardLayout>
+        <MainLayout>
             <div>Admin Dashboard</div>
-        </DashboardLayout>
+        </MainLayout>
     )
 }
