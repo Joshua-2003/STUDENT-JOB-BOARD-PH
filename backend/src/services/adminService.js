@@ -11,28 +11,50 @@ import db from '../index.js';
 export const getAllStudents = async (options = {}) => {
     
     try {
-        const { page, limit } = options;
+        const { page, limit, search, sortBy, sortOrder } = options;
+        // Define how many data to skip based on the current page and limit
         const offset = (page - 1) * limit;
 
-        const [countResult] = await db.select({ count: sql`count(*)` }).from(studentTable);
-        const totalCount = Number(countResult.count);
+        // Build where clause for search functionality
+        const whereClause = search
+            ? sql`${studentTable.name} ILIKE ${'%' + search + '%'}`
+            : undefined;
+
+        // Build order by clause for sorting functionality
+        const orderBy =
+            sortOrder === 'asc'
+                ? studentTable[sortBy]
+                : desc(studentTable[sortBy]);
+
+        // Get total count for pagination
+        const [{ count }] = await db
+            .select({ count: sql`count(*)` })
+            .from(studentTable)
+            .where(whereClause);
+
+
+        // const [countResult] = await db.select({ count: sql`count(*)` }).from(studentTable);
+        // const totalCount = Number(countResult.count);
 
         const studentsList = await db
             .select()
             .from(studentTable)
-            .orderBy(desc(studentTable.created_at))
+            .where(whereClause)
+            .orderBy(orderBy)
             .limit(limit)
             .offset(offset);
 
-        return { 
-            studentsList, 
+
+        return {
+            data: studentsList,
             pagination: {
-                page, 
+                page,
                 limit,
-                totalCount,
-                totalPages: Math.ceil(totalCount / limit)
-            } 
+                totalCount: Number(count),
+                totalPages: Math.ceil(count / limit),
+            },
         };
+
     } catch (error) {
         throw error;
     }

@@ -37,28 +37,46 @@ export default function StudentsList() {
     ];
 
     const [students, setStudents] = useState([]);
+    const [pagination, setPagination] = useState({
+        pageIndex: 0, // frontend = 0-based
+        pageSize: 10,
+    });
+    const [sorting, setSorting] = useState([]);
+    const [columnFilters, setColumnFilters] = useState([]);
+    const [pageCount, setPageCount] = useState(0);
 
     useEffect(() => {
         const fetchStudents = async () => {
             try {
-                const response = await api.get("/admin/getStudents", {
+                const page = pagination.pageIndex + 1;
+                const limit = pagination.pageSize;
+
+                const search =
+                    columnFilters.find(f => f.id === 'name')?.value ?? '';
+
+                const response = await api.get(`/admin/getStudents?page=${page}&limit=${limit}&search=${search}`, {
                     withCredentials: true
                 });
 
-                const studentsList = response.data.data.studentsList;
+                const studentsList = response.data.data.data;
+                const totalPages = response.data.data.pagination.totalPages
                 setStudents(studentsList);
+                setPageCount(totalPages);
             } catch (error) {
                 console.error("Error fetching students:", error);
             }
         }
 
         fetchStudents();
-    }, []);
+    }, [pagination.pageIndex,
+        pagination.pageSize,
+        columnFilters,
+        sorting,]);
 
     return (
         <MainLayout>
             {/* <h1>Students List</h1> */}
-            <DataTable columns={columns} data={students} />
+            <DataTable columns={columns} data={students} pagination={pagination} setPagination={setPagination} sorting={sorting} setSorting={setSorting} columnFilters={columnFilters} setColumnFilters={setColumnFilters} pageCount={pageCount} />
         </MainLayout>
     )
 }

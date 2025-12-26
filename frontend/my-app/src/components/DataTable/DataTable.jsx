@@ -4,7 +4,21 @@ import {
     flexRender,
 } from "@tanstack/react-table";
 
-export default function DataTable({ data, columns, onEdit, onDelete }) {
+import { useState } from "react";
+
+export default function DataTable({ 
+    data, 
+    columns,
+    pagination,
+    setPagination,
+    sorting,
+    setSorting,
+    columnFilters,
+    setColumnFilters,
+    pageCount,
+    onEdit, 
+    onDelete 
+}) {
     // Add an actions column dynamically
     const actionColumn = {
         id: 'actions',
@@ -30,6 +44,22 @@ export default function DataTable({ data, columns, onEdit, onDelete }) {
     const table = useReactTable({
         data,
         columns: [...columns, actionColumn],
+        manualPagination: true,
+        manualSorting: true,
+        manualFiltering: true,
+
+        pageCount,
+
+        state: {
+            pagination,
+            sorting,
+            columnFilters,
+        },
+
+        onPaginationChange: setPagination, // setPagination of parent component
+        onSortingChange: setSorting,
+        onColumnFiltersChange: setColumnFilters,
+
         getCoreRowModel: getCoreRowModel(),
     });
 
@@ -77,6 +107,32 @@ export default function DataTable({ data, columns, onEdit, onDelete }) {
                     ))}
                 </tbody>
             </table>
+            
+            {/* Pagination */}
+            <div className="flex items-center justify-between px-4 py-3 text-sm text-gray-400">
+                <span>
+                    Page {pagination.pageIndex + 1} of {pageCount}
+                </span>
+
+                <div className="flex gap-2">
+                    <button
+                        onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}
+                        className="px-3 py-1 rounded bg-gray-700 hover:bg-gray-600 disabled:opacity-50 cursor-pointer"
+                    >
+                        Previous
+                    </button>
+
+                    <button
+                        onClick={() => table.nextPage()}
+                        disabled={!table.getCanNextPage()}
+                        className="px-3 py-1 rounded bg-gray-700 hover:bg-gray-600 disabled:opacity-50 cursor-pointer"
+                    >
+                        Next
+                    </button>
+                </div>
+            </div>
+
         </div>
     );
 }
