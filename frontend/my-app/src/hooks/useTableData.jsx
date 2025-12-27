@@ -16,7 +16,8 @@ export function useTableData(endpoint) {
                 const limit = pagination.pageSize;
 
                 // Example: search by name
-                const search = columnFilters.find(f => f.id === 'name')?.value ?? '';
+                const nameFilter = columnFilters.find(f => f.id === 'name');
+                const search = nameFilter ? nameFilter.value : '';
 
                 const response = await api.get(`${endpoint}?page=${page}&limit=${limit}&search=${search}`, {
                     withCredentials: true

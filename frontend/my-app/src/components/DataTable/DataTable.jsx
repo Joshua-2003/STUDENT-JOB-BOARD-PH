@@ -65,6 +65,23 @@ export default function DataTable({
 
     return (
         <div className="overflow-x-auto shadow-md rounded-lg">
+            {/* Search input */}
+            <div className="mb-4 flex items-center justify-between">
+                <div className="relative w-72">
+                    <input
+                        type="text"
+                        placeholder="Search by name..."
+                        value={table.getColumn("name")?.getFilterValue() ?? ""}
+                        onChange={(e) => {
+                            table.getColumn("name")?.setFilterValue(e.target.value);
+                        }}
+                        className="w-72 rounded-lg bg-gray-800 text-gray-100 border border-gray-700 px-4 py-2"
+                    />
+
+                </div>
+            </div>
+
+            {/* Table */}
             <table className="min-w-full border-collapse text-gray-100">
                 <thead className="text-left text-[#8392AB] text-sm">
                     {table.getHeaderGroups().map(headerGroup => (

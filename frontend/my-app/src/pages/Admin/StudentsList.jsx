@@ -5,6 +5,8 @@ import { useTableData } from "../../hooks/useTableData.jsx";
 
 import MainLayout from "../../components/layout/MainLayout.jsx";
 
+import { useEffect } from "react";
+
 export default function StudentsList() {
 
     const {
@@ -44,6 +46,13 @@ export default function StudentsList() {
         }),
 
     ];
+
+    useEffect(() => {
+        setPagination(prev => {
+            if (prev.pageIndex === 0) return prev;
+            return { ...prev, pageIndex: 0 };
+        });
+    }, [columnFilters, sorting, pagination.pageSize]);
 
 
     return (
