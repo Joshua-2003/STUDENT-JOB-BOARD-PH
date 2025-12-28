@@ -60,3 +60,7 @@ export const getAllStudents = async (options = {}) => {
     }
 
 }
+
+// export const updateStudent = async () => {
+
+// };

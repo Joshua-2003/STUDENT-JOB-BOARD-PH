@@ -29,6 +29,11 @@ export const AuthProvider = ({ children }) => {
         else if (user.type === "EMPLOYER") navigate("/employer");
     }, [user]);
 
+     // run once on app load
+    useEffect(() => {
+        fetchUser();
+    }, []);
+
     const logout = async () => {
         await api.post("/auth/logout");
         setUser(null);
