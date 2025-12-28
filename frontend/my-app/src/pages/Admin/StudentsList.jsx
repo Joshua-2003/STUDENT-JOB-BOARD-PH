@@ -4,10 +4,14 @@ import DataTable from "../../components/DataTable/DataTable";
 import { useTableData } from "../../hooks/useTableData.jsx";
 
 import MainLayout from "../../components/layout/MainLayout.jsx";
+import Modal from "../../components/Modal.jsx";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function StudentsList() {
+
+    const [isOpenModal, setIsOpenModal] = useState(false);
+    const [user, setUser] = useState({});
 
     const {
         data,
@@ -47,6 +51,22 @@ export default function StudentsList() {
 
     ];
 
+    // Edit a student
+    const openEditModal = (data) => {
+        setUser(data);
+        setIsOpenModal(true);
+    };
+
+    // Close edit modal
+    const handleCloseEditModal = () => {
+        setIsOpenModal(false);
+    }
+
+    // Delete a student
+    const handleDelete = async (data) => {
+        console.log(data);
+    };
+
     useEffect(() => {
         setPagination(prev => {
             if (prev.pageIndex === 0) return prev;
@@ -57,8 +77,8 @@ export default function StudentsList() {
 
     return (
         <MainLayout>
-            {/* <h1>Students List</h1> */}
-            <DataTable columns={columns} data={data} pagination={pagination} setPagination={setPagination} sorting={sorting} setSorting={setSorting} columnFilters={columnFilters} setColumnFilters={setColumnFilters} pageCount={pageCount} />
+            <Modal isOpen={isOpenModal} student={user} onClose={handleCloseEditModal}/>
+            <DataTable columns={columns} data={data} pagination={pagination} setPagination={setPagination} sorting={sorting} setSorting={setSorting} columnFilters={columnFilters} setColumnFilters={setColumnFilters} pageCount={pageCount} onEdit={openEditModal} onDelete={handleDelete}/>
         </MainLayout>
     )
 }
