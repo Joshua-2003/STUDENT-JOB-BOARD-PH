@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.get('/getStudents', requireAuth, authorize('ADMIN'), adminController.handleGetAllStudents);
 router.put('/updateStudent/:id', requireAuth, authorize('ADMIN'), adminController.handleUpdateStudent);
+router.put('/softDeleteStudent/:id', requireAuth, authorize('ADMIN'), adminController.handleSoftDeleteStudent);
 
 export default router;

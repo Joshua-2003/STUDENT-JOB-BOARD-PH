@@ -35,7 +35,24 @@ export const handleUpdateStudent = async (req, res, next) => {
             data: updatedStudent,
         });
     } catch (error) {
-        next(error)
+        next(error);
+    }
+};
+
+export const handleSoftDeleteStudent = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        
+        const softDeleteStudent = await adminService.softDeleteStudent(id);
+
+        res.status(200).json({
+            success: true,
+            message: "Student deleted successfully",
+            data: softDeleteStudent,
+        });
+    } catch (error) {
+        next(error);
+
     }
 };
 

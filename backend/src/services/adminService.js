@@ -93,3 +93,17 @@ export const updateStudent = async (studentId, updateData) => {
         throw(error)
     }
 };
+
+export const softDeleteStudent = async (studentId) => {
+    try {
+        const [softDeleteStudent] = await db
+            .update(studentTable)
+            .set({ is_deleted: true, updated_at: new Date()})
+            .where(eq(studentTable.id, studentId))
+            .returning({ softDeleteStudentName: studentTable.name });
+        
+        return softDeleteStudent;
+    } catch (error) {
+        throw(error)
+    }
+};
