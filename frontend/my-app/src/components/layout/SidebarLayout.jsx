@@ -79,7 +79,7 @@ export default function SidebarLayout({ children }) {
 
                 {/* Bottom Nav */}
                 <div className="p-3 space-y-1">
-                    <button className="text-[#344767] font-medium flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-100 w-full text-left cursor-pointer">
+                    <button onClick={() => logout()} className="text-[#344767] font-medium flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-100 w-full text-left cursor-pointer">
                         <span className="shadow-2xl bg-gray-200 p-2 rounded-lg"><MdLogout /></span>
                         <span className="text-sm">Logout</span>
                     </button>
