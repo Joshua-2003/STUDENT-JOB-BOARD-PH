@@ -1,0 +1,409 @@
+{
+    "design_system": {
+        "name": "Crexio HR Management Interface",
+        "version": "1.0",
+        "design_philosophy": "Clean, modern HRIS interface with emphasis on data clarity and soft visual hierarchy",
+        "color_palette": {
+            "primary": {
+                "yellow": {
+                    "light": "#FFF4D9",
+                    "medium": "#FFE680",
+                    "bright": "#FFD700",
+                    "description": "Used for highlights, selections, and accent elements"
+                },
+                "dark": {
+                    "charcoal": "#2B2D31",
+                    "description": "Primary text and navigation active states"
+                }
+            },
+            "secondary": {
+                "gray": {
+                    "light": "#F8F9FA",
+                    "medium": "#E5E7EB",
+                    "text": "#6B7280",
+                    "description": "Backgrounds, borders, secondary text"
+                }
+            },
+            "status_colors": {
+                "success": "#10B981",
+                "info": "#3B82F6",
+                "warning": "#F59E0B",
+                "neutral": "#9CA3AF"
+            },
+            "background": {
+                "primary": "#FFFFFF",
+                "secondary": "#FFFEF5",
+                "gradient": "linear-gradient(to right, #FFF9E6, #FFFEF5)"
+            }
+        },
+        "typography": {
+            "font_families": {
+                "primary": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                "fallback": "system-ui, sans-serif"
+            },
+            "scale": {
+                "page_title": {
+                    "size": "32px",
+                    "weight": "600",
+                    "line_height": "1.2",
+                    "letter_spacing": "-0.02em"
+                },
+                "section_header": {
+                    "size": "14px",
+                    "weight": "500",
+                    "line_height": "1.4",
+                    "letter_spacing": "0"
+                },
+                "table_header": {
+                    "size": "12px",
+                    "weight": "500",
+                    "line_height": "1.5",
+                    "color": "#6B7280",
+                    "text_transform": "capitalize"
+                },
+                "body": {
+                    "size": "14px",
+                    "weight": "400",
+                    "line_height": "1.5"
+                },
+                "small": {
+                    "size": "12px",
+                    "weight": "400",
+                    "line_height": "1.4"
+                }
+            }
+        },
+        "spacing_system": {
+            "base_unit": "4px",
+            "scale": {
+                "xs": "4px",
+                "sm": "8px",
+                "md": "12px",
+                "lg": "16px",
+                "xl": "24px",
+                "2xl": "32px",
+                "3xl": "48px"
+            },
+            "component_spacing": {
+                "table_row_padding": "16px 20px",
+                "card_padding": "20px",
+                "button_padding": "8px 16px",
+                "input_padding": "10px 14px"
+            }
+        },
+        "components": {
+            "navigation": {
+                "type": "horizontal_top_bar",
+                "structure": {
+                    "logo_position": "left",
+                    "items_alignment": "center",
+                    "utilities_position": "right"
+                },
+                "styling": {
+                    "background": "#FFFFFF",
+                    "height": "64px",
+                    "border_bottom": "1px solid #E5E7EB",
+                    "padding": "0 24px"
+                },
+                "nav_items": {
+                    "default": {
+                        "background": "transparent",
+                        "color": "#6B7280",
+                        "border_radius": "8px",
+                        "padding": "8px 16px",
+                        "font_weight": "500"
+                    },
+                    "active": {
+                        "background": "#2B2D31",
+                        "color": "#FFFFFF"
+                    },
+                    "hover": {
+                        "background": "#F3F4F6"
+                    }
+                }
+            },
+            "page_header": {
+                "structure": {
+                    "title": "Large bold text",
+                    "metrics_bar": "Below title, horizontal layout",
+                    "actions": "Top right aligned"
+                },
+                "metrics_visualization": {
+                    "type": "segmented_progress_bar",
+                    "segments": [
+                        {
+                            "label": "Percentage with count",
+                            "background": "Dark or colored fill",
+                            "text_color": "Contrasting"
+                        }
+                    ],
+                    "border_radius": "24px",
+                    "height": "32px"
+                }
+            },
+            "data_table": {
+                "structure": {
+                    "header": "Sticky, with sort indicators",
+                    "rows": "Alternating hover states",
+                    "columns": "Flexible width, left-aligned by default"
+                },
+                "styling": {
+                    "background": "#FFFFFF",
+                    "border_radius": "12px",
+                    "row_height": "64px",
+                    "border": "none",
+                    "shadow": "0 1px 3px rgba(0,0,0,0.05)"
+                },
+                "row_states": {
+                    "default": {
+                        "background": "#FFFFFF",
+                        "border_bottom": "1px solid #F3F4F6"
+                    },
+                    "selected": {
+                        "background": "#FFF9E6",
+                        "border_left": "3px solid #FFD700"
+                    },
+                    "hover": {
+                        "background": "#FAFAFA"
+                    }
+                },
+                "cell_types": {
+                    "checkbox": {
+                        "position": "first_column",
+                        "size": "16px",
+                        "border_radius": "4px"
+                    },
+                    "avatar_name": {
+                        "avatar_size": "32px",
+                        "avatar_border_radius": "50%",
+                        "name_weight": "500",
+                        "spacing": "12px"
+                    },
+                    "location_flag": {
+                        "flag_size": "16px",
+                        "spacing": "8px"
+                    },
+                    "status_badge": {
+                        "padding": "4px 12px",
+                        "border_radius": "12px",
+                        "font_size": "12px",
+                        "font_weight": "500"
+                    }
+                }
+            },
+            "buttons": {
+                "primary": {
+                    "background": "#2B2D31",
+                    "color": "#FFFFFF",
+                    "border_radius": "8px",
+                    "padding": "10px 18px",
+                    "font_weight": "500",
+                    "hover": {
+                        "background": "#1F2023"
+                    }
+                },
+                "secondary": {
+                    "background": "#FFFFFF",
+                    "color": "#2B2D31",
+                    "border": "1px solid #E5E7EB",
+                    "border_radius": "8px",
+                    "hover": {
+                        "background": "#F9FAFB"
+                    }
+                },
+                "icon_button": {
+                    "size": "36px",
+                    "border_radius": "8px",
+                    "background": "transparent",
+                    "hover": {
+                        "background": "#F3F4F6"
+                    }
+                }
+            },
+            "badges": {
+                "status_badge": {
+                    "structure": {
+                        "dot_indicator": "6px circle",
+                        "text": "Status label",
+                        "spacing": "6px"
+                    },
+                    "variants": {
+                        "invited": {
+                            "background": "#EFF6FF",
+                            "color": "#1E40AF",
+                            "dot_color": "#3B82F6"
+                        },
+                        "hired": {
+                            "background": "#F0FDF4",
+                            "color": "#166534",
+                            "dot_color": "#10B981"
+                        },
+                        "employed": {
+                            "background": "#F3F4F6",
+                            "color": "#374151",
+                            "dot_color": "#6B7280"
+                        },
+                        "absent": {
+                            "background": "#FEF2F2",
+                            "color": "#991B1B",
+                            "dot_color": "#EF4444"
+                        }
+                    },
+                    "styling": {
+                        "padding": "6px 12px",
+                        "border_radius": "16px",
+                        "font_size": "12px",
+                        "font_weight": "500"
+                    }
+                }
+            },
+            "filters_toolbar": {
+                "structure": {
+                    "layout": "horizontal_flex",
+                    "alignment": "space_between",
+                    "background": "#FFFFFF",
+                    "padding": "16px",
+                    "border_radius": "8px"
+                },
+                "filter_buttons": {
+                    "styling": {
+                        "background": "transparent",
+                        "border": "1px solid #E5E7EB",
+                        "border_radius": "6px",
+                        "padding": "8px 12px",
+                        "font_size": "14px",
+                        "dropdown_icon": "chevron_down"
+                    },
+                    "active": {
+                        "background": "#F9FAFB"
+                    }
+                },
+                "search_input": {
+                    "width": "280px",
+                    "border": "1px solid #E5E7EB",
+                    "border_radius": "6px",
+                    "padding": "8px 12px 8px 36px",
+                    "icon_position": "left",
+                    "placeholder_color": "#9CA3AF"
+                }
+            },
+            "dropdown_selects": {
+                "styling": {
+                    "border": "1px solid #E5E7EB",
+                    "border_radius": "6px",
+                    "padding": "8px 32px 8px 12px",
+                    "background": "#FFFFFF",
+                    "chevron": "right_aligned"
+                },
+                "states": {
+                    "hover": {
+                        "border_color": "#D1D5DB"
+                    },
+                    "focus": {
+                        "border_color": "#FFD700",
+                        "outline": "2px solid #FFF4D9"
+                    }
+                }
+            }
+        },
+        "layout_patterns": {
+            "page_container": {
+                "max_width": "1400px",
+                "padding": "32px 48px",
+                "margin": "0 auto"
+            },
+            "content_sections": {
+                "spacing_between": "32px",
+                "card_gap": "16px"
+            },
+            "table_layout": {
+                "column_distribution": "Auto-fit with minimum widths",
+                "responsive_breakpoints": {
+                    "desktop": ">1200px",
+                    "tablet": "768px-1200px",
+                    "mobile": "<768px"
+                }
+            }
+        },
+        "visual_effects": {
+            "shadows": {
+                "sm": "0 1px 2px rgba(0,0,0,0.05)",
+                "md": "0 4px 6px rgba(0,0,0,0.07)",
+                "lg": "0 10px 15px rgba(0,0,0,0.1)"
+            },
+            "transitions": {
+                "fast": "150ms ease-in-out",
+                "normal": "250ms ease-in-out",
+                "slow": "350ms ease-in-out"
+            },
+            "border_radius": {
+                "sm": "4px",
+                "md": "8px",
+                "lg": "12px",
+                "xl": "16px",
+                "full": "9999px"
+            }
+        },
+        "data_visualization": {
+            "metrics_cards": {
+                "layout": "horizontal_segments",
+                "border_radius": "24px",
+                "segment_styling": {
+                    "padding": "8px 20px",
+                    "border_radius": "24px",
+                    "font_weight": "600"
+                }
+            },
+            "progress_indicators": {
+                "height": "32px",
+                "border_radius": "24px",
+                "segments": "Proportional to percentage",
+                "labels": "Centered in segment"
+            }
+        },
+        "icons": {
+            "style": "outline",
+            "stroke_width": "1.5px",
+            "sizes": {
+                "sm": "16px",
+                "md": "20px",
+                "lg": "24px"
+            },
+            "color": "Inherit from parent or #6B7280"
+        },
+        "accessibility": {
+            "focus_states": {
+                "outline": "2px solid #FFD700",
+                "offset": "2px"
+            },
+            "contrast_ratios": {
+                "text": "4.5:1 minimum",
+                "large_text": "3:1 minimum"
+            },
+            "interactive_elements": {
+                "min_touch_target": "44x44px"
+            }
+        },
+        "implementation_guidelines": {
+            "component_hierarchy": [
+                "Start with navigation and page structure",
+                "Implement data tables with proper states",
+                "Add filtering and search functionality",
+                "Include status badges and indicators",
+                "Ensure responsive behavior"
+            ],
+            "state_management": [
+                "Selected rows (yellow highlight)",
+                "Hover states (subtle background change)",
+                "Loading states (skeleton loaders)",
+                "Empty states (centered messaging)",
+                "Error states (inline validation)"
+            ],
+            "responsive_behavior": {
+                "table": "Horizontal scroll on mobile, card view optional",
+                "navigation": "Hamburger menu below 768px",
+                "filters": "Stack vertically on mobile"
+            }
+        }
+    }
+}

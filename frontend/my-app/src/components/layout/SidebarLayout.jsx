@@ -1,10 +1,11 @@
 import { useAuth } from "../../context/AuthContext";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { MdDashboard, MdPeople, MdInsertChart, MdLogout } from "react-icons/md";
 
 export default function SidebarLayout({ children }) {
     const navigate = useNavigate();
+    const location = useLocation();
     const { user, logout } = useAuth();
 
     const getDashboardPath = () => {
@@ -42,58 +43,63 @@ export default function SidebarLayout({ children }) {
 
     const navItems = getNavItems();
 
+    const isActive = (path) => location.pathname === path;
+
     return (
-        <div className="flex h-screen bg-white ">
+        <div className="flex h-screen">
             {/* Sidebar */}
-            <aside className="h-screen w-64 bg-white flex flex-col shadow-xl">
+            <aside className="h-screen w-64 bg-white flex flex-col shadow-xl border-r border-[#E5E7EB]">
                 {/* Logo */}
-                <div className="h-16 flex flex-col items-center justify-center px-4 gap-4 pt-4">
-                    <div onClick={() => navigate(getDashboardPath)} className="text-[#344767] font-bold cursor-pointer">
+                <div className="h-16 flex items-center justify-center px-6 border-b border-[#E5E7EB]">
+                    <div
+                        onClick={() => navigate(getDashboardPath)}
+                        className="text-[#2B2D31] text-lg font-semibold tracking-tight cursor-pointer hover:text-[#1F2023] transition-colors duration-150"
+                    >
                         JOB BOARD PH
                     </div>
-
-                    {/* Divider */}
-                    <div className="bg-gray-200 w-full h-px rounded-full"></div>
                 </div>
 
-
                 {/* Main Nav */}
-                <nav className="flex flex-col gap-4 px-4 py-6 flex-grow">
+                <nav className="flex flex-col gap-1 px-3 py-4 flex-grow">
                     {navItems.map((item) => {
-                        const Icon = item.icon; // get the icon component
+                        const Icon = item.icon;
+                        const active = isActive(item.path);
+
                         return (
                             <button
                                 key={item.path}
                                 onClick={() => navigate(item.path)}
-                                className="text-[#344767] font-medium flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-100 w-full text-left cursor-pointer"
+                                className={`
+                                    flex items-center gap-3 px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-150 cursor-pointer
+                                    ${active
+                                        ? 'bg-[#2B2D31] text-white shadow-sm'
+                                        : 'text-[#6B7280] hover:bg-[#F3F4F6]'
+                                    }
+                                `}
                             >
-                                <span className="shadow-2xl bg-gray-200 p-2 rounded-lg">
-                                    <Icon className="" />
-                                </span>
-                                <span className="text-sm">{item.name}</span>
+                                <Icon className="w-5 h-5" />
+                                <span>{item.name}</span>
                             </button>
                         );
                     })}
                 </nav>
 
-
                 {/* Bottom Nav */}
-                <div className="p-3 space-y-1">
-                    <button onClick={() => logout()} className="text-[#344767] font-medium flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-100 w-full text-left cursor-pointer">
-                        <span className="shadow-2xl bg-gray-200 p-2 rounded-lg"><MdLogout /></span>
-                        <span className="text-sm">Logout</span>
+                <div className="p-3 border-t border-[#E5E7EB]">
+                    <button
+                        onClick={() => logout()}
+                        className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-[#6B7280] hover:bg-[#F3F4F6] w-full text-left font-medium text-sm transition-all duration-150 cursor-pointer"
+                    >
+                        <MdLogout className="w-5 h-5" />
+                        <span>Logout</span>
                     </button>
                 </div>
-
-                
             </aside>
 
             {/* Main Area */}
-            <main className="flex-1 p-6 overflow-auto bg-gray-50">
+            <main className="flex-1 overflow-auto">
                 {children}
             </main>
         </div>
     );
-
-
 }

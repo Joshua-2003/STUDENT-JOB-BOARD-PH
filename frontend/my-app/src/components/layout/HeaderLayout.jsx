@@ -30,12 +30,18 @@ export default function HeaderLayout() {
     const title = getHeaderTitle();
 
     return (
-        <header className="w-full h-16 flex items-center justify-between">
-            <h1 className="text-lg font-bold text-[#344767]">{title}</h1>
-            <div className="flex flex-row justify-center items-center gap-x-3">
-                {/* Icon */}
-                <button className="text-[#344767] text-lg cursor-pointer"><IoIosSettings /></button>
-                <button className="text-[#344767] text-lg cursor-pointer"><IoIosNotifications /></button>
+        <header className="w-full bg-white px-8 py-4 mb-6">
+            <div className="flex items-center justify-between">
+                <h1 className="text-2xl font-semibold text-[#2B2D31] tracking-tight">{title}</h1>
+                
+                <div className="flex items-center gap-2">
+                    <button className="w-9 h-9 flex items-center justify-center rounded-lg text-[#6B7280] hover:bg-[#F3F4F6] transition-colors duration-150 cursor-pointer">
+                        <IoIosSettings className="w-5 h-5" />
+                    </button>
+                    <button className="w-9 h-9 flex items-center justify-center rounded-lg text-[#6B7280] hover:bg-[#F3F4F6] transition-colors duration-150 cursor-pointer">
+                        <IoIosNotifications className="w-5 h-5" />
+                    </button>
+                </div>
             </div>
         </header>
     );

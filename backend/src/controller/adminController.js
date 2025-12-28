@@ -39,6 +39,11 @@ export const handleUpdateStudent = async (req, res, next) => {
     }
 };
 
+/**
+ * Soft delete student 
+ * 
+ * PUT /api/admin/softDeleteStudent
+ */
 export const handleSoftDeleteStudent = async (req, res, next) => {
     try {
         const { id } = req.params;

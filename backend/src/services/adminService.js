@@ -8,6 +8,12 @@ import { applicationTable } from '../db/schemas/applicationTable.js';
 
 import db from '../index.js';
 
+/**
+ * Can get all student
+ * Can get Student via search functionality
+ * @param {object} options 
+ * @returns {Promise<Object>} All students
+ */
 export const getAllStudents = async (options = {}) => {
     
     try {
@@ -31,10 +37,6 @@ export const getAllStudents = async (options = {}) => {
             .select({ count: sql`count(*)` })
             .from(studentTable)
             .where(whereClause);
-
-
-        // const [countResult] = await db.select({ count: sql`count(*)` }).from(studentTable);
-        // const totalCount = Number(countResult.count);
 
         const studentsList = await db
             .select()
@@ -94,6 +96,11 @@ export const updateStudent = async (studentId, updateData) => {
     }
 };
 
+/**
+ * Update material details
+ * @param {string} studentId - Material ID
+ * @returns {Promise<Object>} Updated student
+ */
 export const softDeleteStudent = async (studentId) => {
     try {
         const [softDeleteStudent] = await db
