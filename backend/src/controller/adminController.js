@@ -17,3 +17,25 @@ export const handleGetAllStudents = async (req, res, next) => {
     }
 };
 
+/**
+ * Update Student
+ * 
+ * PUT /api/admin/updateStudent
+ */
+export const handleUpdateStudent = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const updateData = req.body;
+        
+        const updatedStudent = await adminService.updateStudent(id, updateData);
+
+        res.status(200).json({
+            success: true,
+            message: "Student updated successfully",
+            data: updatedStudent,
+        });
+    } catch (error) {
+        next(error)
+    }
+};
+

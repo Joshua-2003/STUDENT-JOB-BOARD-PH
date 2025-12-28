@@ -61,6 +61,35 @@ export const getAllStudents = async (options = {}) => {
 
 }
 
-// export const updateStudent = async () => {
+/**
+ * Update material details
+ * @param {string} studentId - Material ID
+ * @param {Object} updateData - Update data
+ * @returns {Promise<Object>} Updated student
+ */
+export const updateStudent = async (studentId, updateData) => {
+    try {
+        const updateFields = {};
 
-// };
+        if (updateData.name !== undefined) updateFields.name = updateData.name;
+        if (updateData.email !== undefined) updateFields.email = updateData.email;
+        if (updateData.course !== undefined) updateFields.course = updateData.course;
+
+        updateFields.updated_at = new Date();
+
+        console.log("Update fields", updateFields)
+
+        const [updatedStudent] = await db
+            .update(studentTable)
+            .set(updateFields)
+            .where(eq(studentTable.id, studentId))
+            .returning();
+
+        console.log("Updated Student", updatedStudent)
+
+        return updatedStudent;
+
+    } catch (error) {
+        throw(error)
+    }
+};
