@@ -7,7 +7,7 @@ import FormButton from "./form/FormButton";
 import { useForm } from "react-hook-form";
 
 // Note make this a reusable in order to use it for every component
-export default function Modal({ isOpen, onClose, student, onSave }) {
+export default function Modal({ isOpen, onClose, user, onSave }) {
 
     const {
         register,
@@ -16,8 +16,8 @@ export default function Modal({ isOpen, onClose, student, onSave }) {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = async (data) => {
-        console.log("Click");
+    const onSubmit = (userData) => {
+        onSave(userData, user.id);
     };
 
     const handleClose = () => {
@@ -26,17 +26,17 @@ export default function Modal({ isOpen, onClose, student, onSave }) {
     };
 
     useEffect(() => {
-        if (student) {
+        if (user) {
             reset({
-                email: student.email || "",
-                name: student.name || "",
-                course: student.course || "",
+                email: user.email || "",
+                name: user.name || "",
+                course: user.course || "",
             });
         }
-    }, [student, reset]);
+    }, [user, reset]);
 
     if (!isOpen) return null;
-    
+
     return (
         <>
             {/* Backdrop */}

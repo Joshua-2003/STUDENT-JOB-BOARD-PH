@@ -6,12 +6,14 @@ import { useTableData } from "../../hooks/useTableData.jsx";
 import MainLayout from "../../components/layout/MainLayout.jsx";
 import Modal from "../../components/Modal.jsx";
 
+import api from "../../api/axios.js";
+
 import { useEffect, useState } from "react";
 
 export default function StudentsList() {
 
-    const [isOpenModal, setIsOpenModal] = useState(false);
-    const [user, setUser] = useState({});
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
 
     const {
         data,
@@ -51,15 +53,26 @@ export default function StudentsList() {
 
     ];
 
+    // Saving the updated student
+    const handleSubmit = async (userData, userId) => {
+        console.log("Updating:", userId, userData);
+        try {
+            const response = await api.put(`/admin/updateStudent/${userId}`, userData);
+            console.log(response)
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     // Edit a student
-    const openEditModal = (data) => {
-        setUser(data);
-        setIsOpenModal(true);
+    const openEditModal = (user) => {
+        setSelectedUser(user);
+        setIsOpen(true);
     };
 
     // Close edit modal
-    const handleCloseEditModal = () => {
-        setIsOpenModal(false);
+    const handleCloseModal = () => {
+        setIsOpen(false);
     }
 
     // Delete a student
@@ -77,7 +90,7 @@ export default function StudentsList() {
 
     return (
         <MainLayout>
-            <Modal isOpen={isOpenModal} student={user} onClose={handleCloseEditModal}/>
+            <Modal isOpen={isOpen} user={selectedUser} onClose={handleCloseModal} onSave={handleSubmit}/>
             <DataTable columns={columns} data={data} pagination={pagination} setPagination={setPagination} sorting={sorting} setSorting={setSorting} columnFilters={columnFilters} setColumnFilters={setColumnFilters} pageCount={pageCount} onEdit={openEditModal} onDelete={handleDelete}/>
         </MainLayout>
     )
