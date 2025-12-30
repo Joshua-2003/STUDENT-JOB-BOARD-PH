@@ -10,6 +10,8 @@ import api from "../../api/axios.js";
 
 import { useEffect, useState } from "react";
 
+import { showSuccess, showError } from "../../utils/alert.jsx";
+
 export default function StudentsList() {
 
     const [isOpen, setIsOpen] = useState(false);
@@ -58,9 +60,9 @@ export default function StudentsList() {
         console.log("Updating:", userId, userData);
         try {
             const response = await api.put(`/admin/updateStudent/${userId}`, userData);
-            console.log(response)
+            showSuccess("Student Updated", response.data.message);
         } catch (error) {
-            console.log(error);
+            showError("Update Failed", error.message || "Unable to update student");
         }
     };
 
