@@ -8,9 +8,11 @@ import Modal from "../../components/Modal.jsx";
 
 import api from "../../api/axios.js";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 import { showSuccess, showError } from "../../utils/alert.jsx";
+
+import { updateStudent } from "../../services/studentService.js";
 
 export default function StudentsList() {
 
@@ -25,13 +27,14 @@ export default function StudentsList() {
         setSorting,
         columnFilters,
         setColumnFilters,
-        pageCount
+        pageCount,
+        refetch
     } = useTableData('/admin/getStudents');
 
 
     const columnHelper = createColumnHelper();
 
-    const columns = [
+    const columns = useMemo(() => [
         columnHelper.accessor("name", {
             header: "Name",
             cell: info => info.getValue(),
@@ -53,14 +56,15 @@ export default function StudentsList() {
             cell: info => info.getValue(),
         }),
 
-    ];
+    ], []); 
 
     // Saving the updated student
     const handleSubmit = async (userData, userId) => {
-        console.log("Updating:", userId, userData);
         try {
-            const response = await api.put(`/admin/updateStudent/${userId}`, userData);
+            const response = await updateStudent(userId, userData);
             showSuccess("Student Updated", response.data.message);
+            setIsOpen(false);
+            refetch();
         } catch (error) {
             showError("Update Failed", error.message || "Unable to update student");
         }
