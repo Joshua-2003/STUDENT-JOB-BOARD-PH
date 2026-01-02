@@ -6,7 +6,10 @@ import {
 
 import { FiSearch } from "react-icons/fi";
 
+import Loader from "../Loader";
+
 export default function DataTable({
+    isLoading,
     data,
     columns,
     pagination,
@@ -83,48 +86,54 @@ export default function DataTable({
 
             {/* Table */}
             <div className="overflow-x-auto">
-                <table className="min-w-full">
-                    <thead>
-                        {table.getHeaderGroups().map(headerGroup => (
-                            <tr key={headerGroup.id} className="border-b border-[#F3F4F6]">
-                                {headerGroup.headers.map(header => (
-                                    <th
-                                        key={header.id}
-                                        className="px-5 py-3.5 text-left text-xs font-medium text-[#6B7280] uppercase tracking-wide"
-                                    >
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(
-                                                header.column.columnDef.header,
-                                                header.getContext()
-                                            )}
-                                    </th>
-                                ))}
-                            </tr>
-                        ))}
-                    </thead>
+                {isLoading ? 
+                    // Loader
+                    <Loader /> :
 
-                    <tbody>
-                        {table.getRowModel().rows.map(row => (
-                            <tr
-                                key={row.id}
-                                className="border-b border-[#F3F4F6] hover:bg-[#FAFAFA] transition-colors duration-150"
-                            >
-                                {row.getVisibleCells().map(cell => (
-                                    <td
-                                        key={cell.id}
-                                        className="px-5 py-4 text-sm font-normal text-[#2B2D31]"
-                                    >
-                                        {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext()
-                                        )}
-                                    </td>
-                                ))}
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                    // Table
+                    <table className="min-w-full">
+                        <thead>
+                            {table.getHeaderGroups().map(headerGroup => (
+                                <tr key={headerGroup.id} className="border-b border-[#F3F4F6]">
+                                    {headerGroup.headers.map(header => (
+                                        <th
+                                            key={header.id}
+                                            className="px-5 py-3.5 text-left text-xs font-medium text-[#6B7280] uppercase tracking-wide"
+                                        >
+                                            {header.isPlaceholder
+                                                ? null
+                                                : flexRender(
+                                                    header.column.columnDef.header,
+                                                    header.getContext()
+                                                )}
+                                        </th>
+                                    ))}
+                                </tr>
+                            ))}
+                        </thead>
+
+                        <tbody>
+                            {table.getRowModel().rows.map(row => (
+                                <tr
+                                    key={row.id}
+                                    className="border-b border-[#F3F4F6] hover:bg-[#FAFAFA] transition-colors duration-150"
+                                >
+                                    {row.getVisibleCells().map(cell => (
+                                        <td
+                                            key={cell.id}
+                                            className="px-5 py-4 text-sm font-normal text-[#2B2D31]"
+                                        >
+                                            {flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext()
+                                            )}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                }
             </div>
 
             {/* Pagination */}

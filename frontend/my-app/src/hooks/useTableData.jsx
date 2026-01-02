@@ -8,7 +8,10 @@ export function useTableData(endpoint) {
     const [columnFilters, setColumnFilters] = useState([]); // for column filters
     const [pageCount, setPageCount] = useState(0);  // total pages
 
+    const [loading, setLoading] = useState(true);
+
     const fetchData = async () => {
+        setLoading(true)
         try {
             const page = pagination.pageIndex + 1; // backend is 1-based
             const limit = pagination.pageSize;
@@ -29,6 +32,8 @@ export function useTableData(endpoint) {
 
         } catch (error) {
             console.error("Error fetching table data:", error);
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -47,6 +52,7 @@ export function useTableData(endpoint) {
         setColumnFilters,
         pageCount,
         refetch: fetchData,
+        loading
     };
 }
 

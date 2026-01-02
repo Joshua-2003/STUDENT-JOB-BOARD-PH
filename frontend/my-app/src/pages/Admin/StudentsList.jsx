@@ -6,8 +6,6 @@ import { useTableData } from "../../hooks/useTableData.jsx";
 import MainLayout from "../../components/layout/MainLayout.jsx";
 import Modal from "../../components/Modal.jsx";
 
-import api from "../../api/axios.js";
-
 import { useEffect, useState, useMemo } from "react";
 
 import { showSuccess, showError } from "../../utils/alert.jsx";
@@ -20,6 +18,7 @@ export default function StudentsList() {
     const [selectedUser, setSelectedUser] = useState(null);
 
     const {
+        loading,
         data,
         pagination,
         setPagination,
@@ -97,7 +96,7 @@ export default function StudentsList() {
     return (
         <MainLayout>
             <Modal isOpen={isOpen} user={selectedUser} onClose={handleCloseModal} onSave={handleSubmit}/>
-            <DataTable columns={columns} data={data} pagination={pagination} setPagination={setPagination} sorting={sorting} setSorting={setSorting} columnFilters={columnFilters} setColumnFilters={setColumnFilters} pageCount={pageCount} onEdit={openEditModal} onDelete={handleDelete}/>
+            <DataTable isLoading={loading} columns={columns} data={data} pagination={pagination} setPagination={setPagination} sorting={sorting} setSorting={setSorting} columnFilters={columnFilters} setColumnFilters={setColumnFilters} pageCount={pageCount} onEdit={openEditModal} onDelete={handleDelete}/>
         </MainLayout>
     )
 }
