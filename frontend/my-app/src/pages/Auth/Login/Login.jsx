@@ -5,6 +5,8 @@ import FormInput from "../../../components/form/FormInput";
 import FormButton from "../../../components/form/FormButton";
 import FormSelect from "../../../components/form/FormSelect";
 
+import Loader from "../../../components/Loader";
+
 import { useAuth } from "../../../context/AuthContext";
 
 import api from "../../../api/axios";
@@ -20,7 +22,7 @@ export default function Login() {
         }
     });
 
-    const { fetchUser } = useAuth();
+    const { fetchUser, loading } = useAuth();
 
     const onSubmit = async (data) => {
         try {
@@ -30,6 +32,10 @@ export default function Login() {
             console.error("Login failed:", error);
         }
     };
+
+    if (loading) {
+        return <Loader />
+    }
 
     return (
         <FormWrapper title="Login">

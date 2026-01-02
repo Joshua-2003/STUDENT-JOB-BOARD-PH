@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
 
     const fetchUser = async () => {
+        setLoading(true); 
         try {
             const response = await api.get("/auth/me", { withCredentials: true });
             setUser(response.data.data);
